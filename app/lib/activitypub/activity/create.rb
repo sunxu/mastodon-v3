@@ -233,7 +233,7 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     media_attachments = []
 
     as_array(@object['attachment']).each do |attachment|
-      next if attachment['url'].blank? || media_attachments.size >= 4
+      next if attachment['url'].blank? || media_attachments.size >= 24
 
       begin
         href             = Addressable::URI.parse(attachment['url']).normalize.to_s
