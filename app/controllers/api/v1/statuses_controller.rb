@@ -36,6 +36,7 @@ class Api::V1::StatusesController < Api::BaseController
 
   def create
     @status = PostStatusService.new.call(current_user.account,
+                                         id: status_params[:id],
                                          text: status_params[:status],
                                          thread: @thread,
                                          media_ids: status_params[:media_ids],
@@ -43,6 +44,7 @@ class Api::V1::StatusesController < Api::BaseController
                                          spoiler_text: status_params[:spoiler_text],
                                          visibility: status_params[:visibility],
                                          scheduled_at: status_params[:scheduled_at],
+                                         created_at: status_params[:created_at],
                                          application: doorkeeper_token.application,
                                          poll: status_params[:poll],
                                          idempotency: request.headers['Idempotency-Key'],
@@ -79,12 +81,14 @@ class Api::V1::StatusesController < Api::BaseController
 
   def status_params
     params.permit(
+      :id,
       :status,
       :in_reply_to_id,
       :sensitive,
       :spoiler_text,
       :visibility,
       :scheduled_at,
+      :created_at,
       media_ids: [],
       poll: [
         :multiple,
