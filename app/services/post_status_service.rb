@@ -48,7 +48,7 @@ class PostStatusService < BaseService
   private
 
   def preprocess_attributes!
-    @id           = @options[:id] if @options[:id] > 0
+    @id           = @options[:id] if !@options[:id].nil? && @options[:id] > 0
     @sensitive    = (@options[:sensitive].nil? ? @account.user&.setting_default_sensitive : @options[:sensitive]) || @options[:spoiler_text].present?
     @text         = @options.delete(:spoiler_text) if @text.blank? && @options[:spoiler_text].present?
     @visibility   = @options[:visibility] || @account.user&.setting_default_privacy
